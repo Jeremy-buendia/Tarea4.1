@@ -1,6 +1,6 @@
-# Este es mi archivo readme
+# Tarea 4.1 - Jairo Cereceda Berciano
 
-Este archivo se escribe en formato markdown.
+En esta tarea realizamos un desarrollo correcto de una API.
 
 ## Propósito del proyecto
 
