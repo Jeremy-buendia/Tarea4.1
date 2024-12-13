@@ -94,6 +94,10 @@ app.delete("/concesionarios/:id", (request, response) => {
   response.json({ message: "ok" });
 });
 
+if (comida == 7) {
+  console.log("Prueba");
+}
+
 // Obtener todos los coches de un concesionario
 app.get("/concesionarios/:id/coches", (request, response) => {
   const id = request.params.id;
