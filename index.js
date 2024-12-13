@@ -90,10 +90,7 @@ app.put("/concesionarios/:id", (request, response) => {
 // Borrar un concesionario
 app.delete("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
-  concesionarios = concesionarios.filter(
-    (item) => concesionarios.indexOf(item) !== id
-  );
-
+  concesionarios.splice(id, 1);
   response.json({ message: "ok" });
 });
 
