@@ -1,0 +1,310 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "info": {
+      "title": "Concesionarios API.",
+      "version": " 1.0.0"
+    },
+    "definitions": {
+      "Concesionario": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "example": "Motor Way"
+          },
+          "direccion": {
+            "type": "string",
+            "example": "C/ paralela 123"
+          },
+          "coches":{
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Coche"
+            }
+          }
+        },
+        "required": ["nombre", "direccion", "coches"]
+      },
+      "Coche": {
+        "type": "object",
+        "properties":{
+            "modelo":{
+                "type": "string",
+                "example": "Seat Ateca"
+            },
+            "cv": {
+                "type": "integer",
+                "example": "120"
+            },
+            "precio": {
+                "type": "number",
+                "format": "float",
+                "example": 33000
+            }
+        },
+        "required": ["modelo", "cv", "precio"]
+      }
+    },
+    "paths": {
+      "/concesionarios": {
+        "get": {
+          "summary": "Fetch concesionarios",
+          "operationId": "getConcesionarios",
+          "responses": {
+            "200": {
+              "description": "List of Concesionarios.",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Concesionario"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create concesionario",
+          "operationId": "createConcesionario",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/Concesionario"
+                },
+                "example": {
+                  "nombre": "Puerto Motor",
+                  "direccion": "C/ Paralela 22",
+                  "coches": [{ "modelo": "Seat Ateca", "cv": 150, "precio": 33000 }, { "modelo": "Hyundai Tucson", "cv": 230, "precio": 37000 }]
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        }
+      },
+      "/concesionarios/{id}": {
+        "get": {
+          "summary": "Get a concesionario by id.",
+          "operationId": "getConcesionario",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch concesionario.",
+              "schema": {
+                "$ref": "#/definitions/Concesionario"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Concesionario.",
+          "operationId": "updateConcesionario",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "concesionario",
+              "schema": {
+                "items": {
+                  "$ref": "#/definitions/Concesionario"
+                },
+                "example": {
+                  "nombre": "Puerto Motor",
+                  "direccion": "C/ Paralela 22",
+                  "coches": [{ "modelo": "Seat Ateca", "cv": 150, "precio": 33000 }, { "modelo": "Hyundai Tucson", "cv": 230, "precio": 37000 }]
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Concesionario.",
+          "operationId": "deleteConcesionario",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        }
+      },
+      "/concesionarios/{id}/coches":{
+        "get": {
+          "summary": "Fetch coches for a concesionario",
+          "operationId": "getCoches",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of coches.",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Coche"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create coche",
+          "operationId": "createCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "$ref": "#/definitions/Coche",
+                "example": {
+                    "modelo": "Seat Ateca", 
+                    "cv": 150, 
+                    "precio": 33000
+                  }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        }
+      },
+      "/concesionarios/{id}/coches/{idCoches}":{
+        "get": {
+          "summary": "Get a coche by id.",
+          "operationId": "getCoche",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "idCoches",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Fetch coche.",
+              "schema": {
+                "$ref": "#/definitions/Coche"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Coche.",
+          "operationId": "updateCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "idCoches",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "in": "body",
+              "name": "coche",
+              "schema": {
+                "$ref": "#/definitions/Coche",
+                "example": {
+                    "modelo": "Seat Ateca", 
+                    "cv": 150, 
+                    "precio": 33000
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Coche.",
+          "operationId": "deleteCoche",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "idCoches",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "{message: 'ok'}"
+            }
+          }
+        }
+      }
+    }
+  }
+  

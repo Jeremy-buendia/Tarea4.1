@@ -1,3 +1,5 @@
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 const helmet = require("helmet");
 
 /**
@@ -18,6 +20,8 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 
 app.use(helmet());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //URL de conexión
 const uri =
